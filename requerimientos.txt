@@ -1,0 +1,23 @@
+- El proyecto consiste en desarrollar una plataforma de verificación para embarcaciones en Cartagena, especialmente para las 850 motonaves de pasaje (uso comercial).
+- Estas embarcaciones deben estar afiliadas a empresas de transporte marítimo de pasajeros autorizadas por la DIMAR.
+- Actualmente existen 92 empresas de transporte, pero aproximadamente el 95% son "de papel" (cumplen normas solo en documentos).
+- La plataforma busca mejorar el control y verificación de embarcaciones, agilizando el trabajo de inspectores en muelles.
+
+### Funcionalidades Principales
+
+- Sistema basado en códigos QR vinculados a cada embarcación.
+- Al escanear el QR, muestra pantalla verde (disponible para navegar) o roja (no disponible) con las razones.
+- Permite verificar documentación: matrícula, certificados de seguridad, pólizas, etc.
+- Incluye tarjeta de propiedad física con QR para cada embarcación.
+
+### Estructura Propuesta
+
+- **Módulo 1 (Principal):** Sistema de verificación para todas las motonaves.
+- **Módulo 2:** Base de datos de pilotos con hojas de vida estandarizadas, credenciales con QR.
+- **Módulo 3:** Gestión para empresas de transporte (programación de mantenimientos, auditorías, etc.).
+
+### Usuarios de la Plataforma
+
+- Público general (turistas que pueden verificar embarcaciones).
+- Autoridades marítimas (inspectores con acceso ampliado).
+- Profesionales del gremio náutico.
