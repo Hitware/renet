@@ -51,6 +51,30 @@ class Embarcacion extends Model
     }
 
     /**
+     * Get the documentos for the embarcacion.
+     */
+    public function documentos()
+    {
+        return $this->hasMany(DocumentoEmbarcacion::class);
+    }
+
+    /**
+     * Get the imagenes for the embarcacion.
+     */
+    public function imagenes()
+    {
+        return $this->hasMany(EmbarcacionImagen::class)->orderBy('orden');
+    }
+
+    /**
+     * Get the principal image.
+     */
+    public function imagenPrincipal()
+    {
+        return $this->hasOne(EmbarcacionImagen::class)->where('es_principal', true);
+    }
+
+    /**
      * Generate a unique QR code for the embarcacion.
      */
     public function generateQrCode(): string
@@ -107,5 +131,76 @@ class Embarcacion extends Model
     public function getVerificationUrl(): string
     {
         return route('verificar', ['codigo' => $this->codigo_qr]);
+    }
+
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKey()
+    {
+        return encrypt($this->id);
+    }
+
+    /**
+     * Retrieve the model for a bound value.
+     */
+    public function resolveRouteBinding($value, $field = null)
+    {
+        try {
+            $id = decrypt($value);
+            return $this->where('id', $id)->firstOrFail();
+        } catch (\Exception $e) {
+            abort(404);
+        }
+    }
+
+    /**
+     * Check if embarcacion can navigate based on documents.
+     */
+    public function puedeNavegar(): bool
+    {
+        $tiposRequeridos = [
+            'matricula',
+            'certificado_navegacion',
+            'poliza_accidentes',
+            'poliza_pandi',
+            'resolucion_dimar'
+        ];
+
+        foreach ($tiposRequeridos as $tipo) {
+            $documento = $this->documentos()->where('tipo_documento', $tipo)->first();
+            if (!$documento || !$documento->estaVigente()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Get list of missing or expired documents.
+     */
+    public function getDocumentosFaltantes(): array
+    {
+        $tiposRequeridos = [
+            'matricula' => 'Matrícula',
+            'certificado_navegacion' => 'Certificado de Navegación',
+            'poliza_accidentes' => 'Póliza de Accidentes Personales',
+            'poliza_pandi' => 'Póliza Todo Riesgo PANDI',
+            'resolucion_dimar' => 'Resolución DIMAR'
+        ];
+
+        $faltantes = [];
+
+        foreach ($tiposRequeridos as $tipo => $nombre) {
+            $documento = $this->documentos()->where('tipo_documento', $tipo)->first();
+            if (!$documento) {
+                $faltantes[] = "$nombre no registrada";
+            } elseif (!$documento->estaVigente()) {
+                $faltantes[] = "$nombre vencida";
+            }
+        }
+
+        return $faltantes;
     }
 }

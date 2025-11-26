@@ -230,7 +230,7 @@
                 <h3 class="text-xl font-bold text-gray-900 mb-6" style="font-family: 'Outfit', sans-serif;">Acciones Rápidas</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     @if(Auth::user()->isAdmin() || Auth::user()->isInspector())
-                        <a href="#" class="flex items-center p-5 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl hover:from-blue-50 hover:to-blue-100 transition-all duration-200 border border-gray-200 hover:border-blue-300 group">
+                        <a href="{{ route('embarcaciones.index') }}" class="flex items-center p-5 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl hover:from-blue-50 hover:to-blue-100 transition-all duration-200 border border-gray-200 hover:border-blue-300 group">
                             <div class="flex-shrink-0 bg-white p-3 rounded-lg shadow-sm group-hover:shadow-md transition-shadow">
                                 <svg class="h-7 w-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -244,7 +244,7 @@
                     @endif
 
                     @if(Auth::user()->isEmpresa())
-                        <a href="#" class="flex items-center p-5 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl hover:from-green-50 hover:to-green-100 transition-all duration-200 border border-gray-200 hover:border-green-300 group">
+                        <a href="{{ route('embarcaciones.create') }}" class="flex items-center p-5 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl hover:from-green-50 hover:to-green-100 transition-all duration-200 border border-gray-200 hover:border-green-300 group">
                             <div class="flex-shrink-0 bg-white p-3 rounded-lg shadow-sm group-hover:shadow-md transition-shadow">
                                 <svg class="h-7 w-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -256,7 +256,7 @@
                             </div>
                         </a>
 
-                        <a href="#" class="flex items-center p-5 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl hover:from-blue-50 hover:to-blue-100 transition-all duration-200 border border-gray-200 hover:border-blue-300 group">
+                        <a href="{{ route('embarcaciones.index') }}" class="flex items-center p-5 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl hover:from-blue-50 hover:to-blue-100 transition-all duration-200 border border-gray-200 hover:border-blue-300 group">
                             <div class="flex-shrink-0 bg-white p-3 rounded-lg shadow-sm group-hover:shadow-md transition-shadow">
                                 <svg class="h-7 w-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
@@ -269,7 +269,7 @@
                         </a>
                     @endif
 
-                    <a href="{{ route('dashboard') }}" class="flex items-center p-5 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl hover:from-purple-50 hover:to-purple-100 transition-all duration-200 border border-gray-200 hover:border-purple-300 group">
+                    <a href="{{ route('verificar') }}" class="flex items-center p-5 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl hover:from-purple-50 hover:to-purple-100 transition-all duration-200 border border-gray-200 hover:border-purple-300 group">
                         <div class="flex-shrink-0 bg-white p-3 rounded-lg shadow-sm group-hover:shadow-md transition-shadow">
                             <svg class="h-7 w-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path>

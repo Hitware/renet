@@ -74,7 +74,7 @@
                             <span class="font-medium">Empresas</span>
                         </a>
 
-                        <a href="#" class="flex items-center px-4 py-3 text-gray-300 rounded-lg hover:bg-blue-900/50 hover:text-white transition-all duration-200">
+                        <a href="{{ route('embarcaciones.index') }}" class="flex items-center px-4 py-3 text-gray-300 rounded-lg hover:bg-blue-900/50 hover:text-white transition-all duration-200 {{ request()->routeIs('embarcaciones.*') ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/50' : '' }}">
                             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
                             </svg>
@@ -94,14 +94,14 @@
                             <p class="px-4 text-xs font-semibold text-blue-300 uppercase tracking-wider">Inspección</p>
                         </div>
 
-                        <a href="#" class="flex items-center px-4 py-3 text-gray-300 rounded-lg hover:bg-blue-900/50 hover:text-white transition-all duration-200">
+                        <a href="{{ route('embarcaciones.index') }}" class="flex items-center px-4 py-3 text-gray-300 rounded-lg hover:bg-blue-900/50 hover:text-white transition-all duration-200 {{ request()->routeIs('embarcaciones.*') ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/50' : '' }}">
                             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                             </svg>
                             <span class="font-medium">Buscar Embarcaciones</span>
                         </a>
 
-                        <a href="#" class="flex items-center px-4 py-3 text-gray-300 rounded-lg hover:bg-blue-900/50 hover:text-white transition-all duration-200">
+                        <a href="{{ route('reportes.index') }}" class="flex items-center px-4 py-3 text-gray-300 rounded-lg hover:bg-blue-900/50 hover:text-white transition-all duration-200 {{ request()->routeIs('reportes.*') ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/50' : '' }}">
                             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                             </svg>
@@ -121,26 +121,21 @@
                             <p class="px-4 text-xs font-semibold text-blue-300 uppercase tracking-wider">Mi Empresa</p>
                         </div>
 
-                        <a href="#" class="flex items-center px-4 py-3 text-gray-300 rounded-lg hover:bg-blue-900/50 hover:text-white transition-all duration-200">
+                        <a href="{{ route('embarcaciones.index') }}" class="flex items-center px-4 py-3 text-gray-300 rounded-lg hover:bg-blue-900/50 hover:text-white transition-all duration-200 {{ request()->routeIs('embarcaciones.index') ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/50' : '' }}">
                             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
                             </svg>
                             <span class="font-medium">Mi Flota</span>
                         </a>
 
-                        <a href="#" class="flex items-center px-4 py-3 text-gray-300 rounded-lg hover:bg-blue-900/50 hover:text-white transition-all duration-200">
-                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                            </svg>
-                            <span class="font-medium">Nueva Embarcación</span>
-                        </a>
-
-                        <a href="#" class="flex items-center px-4 py-3 text-gray-300 rounded-lg hover:bg-blue-900/50 hover:text-white transition-all duration-200">
-                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                            </svg>
-                            <span class="font-medium">Documentos</span>
-                        </a>
+                        @if(Auth::user()->role !== 'inspector')
+                            <a href="{{ route('embarcaciones.create') }}" class="flex items-center px-4 py-3 text-gray-300 rounded-lg hover:bg-blue-900/50 hover:text-white transition-all duration-200 {{ request()->routeIs('embarcaciones.create') ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/50' : '' }}">
+                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                </svg>
+                                <span class="font-medium">Nueva Embarcación</span>
+                            </a>
+                        @endif
                     @endif
 
                     <!-- Common Menu Items -->
@@ -148,7 +143,7 @@
                         <p class="px-4 text-xs font-semibold text-blue-300 uppercase tracking-wider">General</p>
                     </div>
 
-                    <a href="#" class="flex items-center px-4 py-3 text-gray-300 rounded-lg hover:bg-blue-900/50 hover:text-white transition-all duration-200">
+                    <a href="{{ route('verificar') }}" class="flex items-center px-4 py-3 text-gray-300 rounded-lg hover:bg-blue-900/50 hover:text-white transition-all duration-200" target="_blank">
                         <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path>
                         </svg>

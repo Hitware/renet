@@ -15,6 +15,12 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    @if(Auth::user()->isAdmin() || Auth::user()->isInspector() || Auth::user()->isEmpresa())
+                        <x-nav-link href="{{ route('embarcaciones.index') }}" :active="request()->routeIs('embarcaciones.*')">
+                            Embarcaciones 2
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -142,6 +148,12 @@
             <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            @if(Auth::user()->isAdmin() || Auth::user()->isInspector() || Auth::user()->isEmpresa())
+                <x-responsive-nav-link href="{{ route('embarcaciones.index') }}" :active="request()->routeIs('embarcaciones.*')">
+                    Embarcaciones
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

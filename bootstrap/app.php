@@ -12,7 +12,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
+        $middleware->appendToGroup('web', \App\Http\Middleware\ValidateUserRole::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
