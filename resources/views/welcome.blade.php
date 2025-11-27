@@ -84,7 +84,7 @@
                     </div>
                     <div>
                         <h1 class="text-gray-900 font-bold text-xl">RENET</h1>
-                        <p class="text-gray-500 text-xs font-medium">Gestión Marítima Nacional</p>
+                        <p class="text-gray-500 text-xs font-medium">Registro Nacional de Embarcaciones y Tripulantes</p>
                     </div>
                 </div>
 
@@ -235,7 +235,7 @@
                 </span>
                 <h2 class="text-5xl font-bold text-gray-900 mb-6">¿Por qué elegir RENET?</h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    La plataforma más completa y segura para la gestión marítima nacional
+                    La plataforma más completa y segura para la Registro Nacional de Embarcaciones y Tripulantes
                 </p>
             </div>
 
@@ -478,7 +478,7 @@
                         </div>
                         <div>
                             <h3 class="text-white font-bold text-xl">RENET</h3>
-                            <p class="text-sm text-gray-400">Gestión Marítima Nacional</p>
+                            <p class="text-sm text-gray-400">Registro Nacional de Embarcaciones y Tripulantes</p>
                         </div>
                     </div>
                     <p class="text-gray-400 leading-relaxed mb-6">

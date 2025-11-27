@@ -14,27 +14,36 @@ class VerificacionController extends Controller
 {
     public function verificar(Request $request, $codigo = null)
     {
+        // Verificar por código QR
         if (!$codigo && $request->has('codigo')) {
             $codigo = $request->input('codigo');
         }
 
-        if (!$codigo) {
+        // Verificar por matrícula
+        $matricula = $request->input('matricula');
+
+        if (!$codigo && !$matricula) {
             return view('verificacion.buscar');
         }
 
         try {
-            $embarcacion = Embarcacion::where('codigo_qr', $codigo)
-                ->with(['empresa', 'documentos', 'imagenPrincipal'])
-                ->firstOrFail();
+            $query = Embarcacion::with(['empresa', 'documentos', 'imagenPrincipal']);
+            
+            if ($codigo) {
+                $embarcacion = $query->where('codigo_qr', $codigo)->firstOrFail();
+            } else {
+                // Buscar por matrícula (case insensitive)
+                $embarcacion = $query->whereRaw('UPPER(matricula) = ?', [strtoupper($matricula)])->firstOrFail();
+            }
 
-            $puedeNavegar = $embarcacion->puedeNavegar();
-            $motivos = $puedeNavegar ? null : $embarcacion->getDocumentosFaltantes();
+            $puedeNavegar = $embarcacion->esAptaParaNavegar();
+            $motivos = $puedeNavegar ? null : $embarcacion->getRazonesNoApta();
 
             Verificacion::create([
                 'embarcacion_id' => $embarcacion->id,
                 'ip_address' => $request->ip(),
                 'user_agent' => $request->userAgent(),
-                'resultado' => $puedeNavegar ? 'disponible' : 'no_disponible',
+                'resultado' => $puedeNavegar ? 'apta' : 'no_apta',
                 'motivos' => $motivos,
             ]);
 

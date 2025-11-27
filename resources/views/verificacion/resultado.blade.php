@@ -11,6 +11,13 @@
         <div class="max-w-4xl mx-auto">
             <!-- Estado Principal -->
             <div class="bg-white rounded-lg shadow-xl overflow-hidden mb-6">
+                <!-- Foto Principal -->
+                @if($embarcacion->imagenPrincipal)
+                    <div class="w-full h-64 overflow-hidden">
+                        <img src="{{ Storage::url($embarcacion->imagenPrincipal->ruta) }}" class="w-full h-full object-cover">
+                    </div>
+                @endif
+
                 <div class="p-8 text-center {{ $puedeNavegar ? 'bg-green-600' : 'bg-red-600' }}">
                     <svg class="w-24 h-24 mx-auto text-white mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         @if($puedeNavegar)
@@ -20,7 +27,7 @@
                         @endif
                     </svg>
                     <h1 class="text-4xl font-bold text-white mb-2">
-                        {{ $puedeNavegar ? 'EMBARCACIÓN DISPONIBLE' : 'EMBARCACIÓN NO DISPONIBLE' }}
+                        {{ $puedeNavegar ? 'EMBARCACIÓN APTA PARA NAVEGAR' : 'EMBARCACIÓN NO APTA PARA NAVEGAR' }}
                     </h1>
                     <p class="text-white text-lg">
                         {{ $puedeNavegar ? 'Todos los documentos están vigentes' : 'Documentación incompleta o vencida' }}
@@ -29,12 +36,8 @@
 
                 <!-- Información de la Embarcación -->
                 <div class="p-8">
-                    <div class="flex items-start space-x-6 mb-6">
-                        @if($embarcacion->imagenPrincipal)
-                            <img src="{{ Storage::url($embarcacion->imagenPrincipal->ruta) }}" class="w-48 h-32 object-cover rounded-lg border-2 border-gray-200">
-                        @endif
-                        <div class="flex-1">
-                            <h2 class="text-2xl font-bold text-gray-900 mb-2">{{ $embarcacion->nombre }}</h2>
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-2">{{ $embarcacion->nombre }}</h2>
                             <div class="grid grid-cols-2 gap-4 text-sm">
                                 <div>
                                     <span class="text-gray-600">Matrícula:</span>
@@ -58,7 +61,7 @@
 
                     @if(!$puedeNavegar && $motivos)
                         <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded">
-                            <h3 class="font-semibold text-red-900 mb-2">Motivos de No Disponibilidad:</h3>
+                            <h3 class="font-semibold text-red-900 mb-2">Razones por las que NO es apta para navegar:</h3>
                             <ul class="list-disc list-inside text-red-700 space-y-1">
                                 @foreach($motivos as $motivo)
                                     <li>{{ $motivo }}</li>

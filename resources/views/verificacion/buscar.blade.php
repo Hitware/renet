@@ -39,8 +39,31 @@
 
             <form action="{{ route('verificar') }}" method="GET" class="space-y-6 mt-6">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Código de Verificación</label>
-                    <input type="text" id="inputCodigo" name="codigo" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Ingrese el código">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Matrícula de la Embarcación</label>
+                    <input type="text" id="inputCodigo" name="matricula" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 uppercase" placeholder="CP-12-3456 o CP-12-3456-X" pattern="^CP-\d{2}-\d{4}(-[A-Z])?$" title="Formato: CP-##-#### o CP-##-####-X" maxlength="13" oninput="
+                        let input = this.value.toUpperCase();
+                        let clean = input.replace(/[^0-9A-Z]/g, '');
+                        
+                        if (!clean.startsWith('CP')) {
+                            clean = 'CP' + clean.replace(/^CP/, '');
+                        }
+                        
+                        let formatted = 'CP';
+                        let rest = clean.substring(2);
+                        
+                        if (rest.length > 0) {
+                            formatted += '-' + rest.substring(0, 2);
+                        }
+                        if (rest.length > 2) {
+                            formatted += '-' + rest.substring(2, 6);
+                        }
+                        if (rest.length > 6) {
+                            formatted += '-' + rest.substring(6, 7);
+                        }
+                        
+                        this.value = formatted;
+                    ">
+                    <p class="text-xs text-gray-500 mt-1">Formato: CP-##-#### o CP-##-####-X</p>
                 </div>
                 <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-lg transition">
                     Verificar Embarcación

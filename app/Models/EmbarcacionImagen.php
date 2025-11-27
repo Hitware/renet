@@ -12,6 +12,7 @@ class EmbarcacionImagen extends Model
     protected $fillable = [
         'embarcacion_id',
         'ruta',
+        'lado',
         'descripcion',
         'es_principal',
         'orden',

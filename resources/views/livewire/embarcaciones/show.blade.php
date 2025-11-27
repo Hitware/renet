@@ -94,10 +94,23 @@
                         <h4 class="font-semibold text-gray-700 mb-3">Imágenes de la Embarcación</h4>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                             @foreach($embarcacion->imagenes as $imagen)
-                                <div class="relative aspect-video bg-gray-100 rounded-lg overflow-hidden">
+                                <div class="relative aspect-video bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-200">
                                     <img src="{{ Storage::url($imagen->ruta) }}" class="w-full h-full object-cover">
+                                    @php
+                                        $ladoNombres = [
+                                            'proa' => 'Proa (Frente)',
+                                            'popa' => 'Popa (Atrás)',
+                                            'estribor' => 'Estribor (Derecha)',
+                                            'babor' => 'Babor (Izquierda)',
+                                            'cubierta' => 'Cubierta (Superior)'
+                                        ];
+                                        $ladoTexto = $imagen->lado ? ($ladoNombres[$imagen->lado] ?? ucfirst($imagen->lado)) : 'Sin especificar';
+                                    @endphp
+                                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                                        <span class="text-white text-xs font-semibold">{{ $ladoTexto }}</span>
+                                    </div>
                                     @if($imagen->es_principal)
-                                        <span class="absolute top-2 left-2 bg-blue-600 text-white text-xs px-2 py-1 rounded">Principal</span>
+                                        <span class="absolute top-2 left-2 bg-blue-600 text-white text-xs px-2 py-1 rounded shadow-lg">Principal</span>
                                     @endif
                                 </div>
                             @endforeach

@@ -16,6 +16,11 @@ class SecurityHeaders
         $response->headers->set('X-XSS-Protection', '1; mode=block');
         $response->headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
         $response->headers->set('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+        
+        // Ocultar información del servidor
+        $response->headers->remove('X-Powered-By');
+        $response->headers->remove('Server');
+        $response->headers->set('Server', 'WebServer');
 
         return $response;
     }

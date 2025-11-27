@@ -27,14 +27,22 @@ class Form extends Component
     public $motor_modelo;
     public $motor_potencia;
     public $observaciones;
-    public $imagenes = [];
+    public $imagen_proa;
+    public $imagen_popa;
+    public $imagen_estribor;
+    public $imagen_babor;
+    public $imagen_cubierta;
     public $imagenesExistentes = [];
+    public $armador_direccion;
+    public $armador_email;
+    public $armador_contacto;
+    public $armador_telefono;
 
     protected function rules()
     {
         return [
             'empresa_id' => 'required|exists:empresas,id',
-            'matricula' => 'required|string|regex:/^[A-Z0-9\-]+$/|max:50|unique:embarcaciones,matricula',
+            'matricula' => 'required|string|regex:/^CP-\d{2}-\d{4}(-[A-Z])?$/|max:50|unique:embarcaciones,matricula',
             'nombre' => 'required|string|regex:/^[a-zA-Z0-9\s\-\.]+$/|max:255',
             'tipo' => 'required|in:motonave_pasaje,carga,pesquera,recreativa',
             'capacidad_pasajeros' => 'nullable|integer|min:1|max:9999',
@@ -47,12 +55,20 @@ class Form extends Component
             'motor_modelo' => 'nullable|string|regex:/^[a-zA-Z0-9\s\-\.]+$/|max:100',
             'motor_potencia' => 'nullable|integer|min:0|max:99999',
             'observaciones' => 'nullable|string|max:1000',
-            'imagenes.*' => 'nullable|image|max:5120',
+            'imagen_proa' => 'nullable|image|max:5120',
+            'imagen_popa' => 'nullable|image|max:5120',
+            'imagen_estribor' => 'nullable|image|max:5120',
+            'imagen_babor' => 'nullable|image|max:5120',
+            'imagen_cubierta' => 'nullable|image|max:5120',
+            'armador_direccion' => 'required|string|max:255',
+            'armador_email' => 'required|email|max:255',
+            'armador_contacto' => 'required|string|max:255',
+            'armador_telefono' => 'required|string|max:50',
         ];
     }
 
     protected $messages = [
-        'matricula.regex' => 'La matrícula solo puede contener letras mayúsculas, números y guiones.',
+        'matricula.regex' => 'La matrícula debe tener el formato CP-##-#### o CP-##-####-X (ejemplo: CP-12-3456 o CP-12-3456-A).',
         'nombre.regex' => 'El nombre solo puede contener letras, números, espacios, guiones y puntos.',
         'material_casco.regex' => 'El material del casco solo puede contener letras, números, espacios, guiones y puntos.',
         'motor_marca.regex' => 'La marca del motor solo puede contener letras, números, espacios, guiones y puntos.',
@@ -97,6 +113,10 @@ class Form extends Component
             'motor_modelo' => $this->motor_modelo ? strtoupper(trim(strip_tags($this->motor_modelo))) : null,
             'motor_potencia' => $this->motor_potencia ? (int)$this->motor_potencia : null,
             'observaciones' => $this->observaciones ? trim(strip_tags($this->observaciones)) : null,
+            'armador_direccion' => $this->armador_direccion ? trim(strip_tags($this->armador_direccion)) : null,
+            'armador_email' => $this->armador_email ? trim(strip_tags($this->armador_email)) : null,
+            'armador_contacto' => $this->armador_contacto ? trim(strip_tags($this->armador_contacto)) : null,
+            'armador_telefono' => $this->armador_telefono ? trim(strip_tags($this->armador_telefono)) : null,
         ];
 
         if ($this->embarcacionId) {
@@ -109,14 +129,24 @@ class Form extends Component
             session()->flash('message', 'Embarcación creada exitosamente.');
         }
 
-        if ($this->imagenes) {
-            foreach ($this->imagenes as $index => $imagen) {
+        $imagenes = [
+            'proa' => $this->imagen_proa,
+            'popa' => $this->imagen_popa,
+            'estribor' => $this->imagen_estribor,
+            'babor' => $this->imagen_babor,
+            'cubierta' => $this->imagen_cubierta,
+        ];
+
+        $orden = $embarcacion->imagenes()->count();
+        foreach ($imagenes as $lado => $imagen) {
+            if ($imagen) {
                 $path = $imagen->store('embarcaciones/imagenes', 'public');
                 EmbarcacionImagen::create([
                     'embarcacion_id' => $embarcacion->id,
                     'ruta' => $path,
-                    'es_principal' => $index === 0 && $embarcacion->imagenes()->count() === 0,
-                    'orden' => $embarcacion->imagenes()->count() + $index,
+                    'lado' => $lado,
+                    'es_principal' => $lado === 'proa' && $embarcacion->imagenes()->count() === 0,
+                    'orden' => $orden++,
                 ]);
             }
         }

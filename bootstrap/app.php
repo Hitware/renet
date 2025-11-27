@@ -13,7 +13,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
+        $middleware->append(\App\Http\Middleware\ValidateHostHeader::class);
         $middleware->appendToGroup('web', \App\Http\Middleware\ValidateUserRole::class);
+        $middleware->appendToGroup('web', \App\Http\Middleware\PreventTimingAttacks::class);
+        $middleware->appendToGroup('web', \App\Http\Middleware\LimitConcurrentUploads::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

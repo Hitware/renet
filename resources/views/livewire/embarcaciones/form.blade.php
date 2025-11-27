@@ -10,6 +10,40 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
                 <form wire:submit.prevent="save">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Información del Armador -->
+                        <div class="md:col-span-2">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">Información del Armador</h3>
+                        </div>
+
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Dirección *</label>
+                            <input wire:model="armador_direccion" type="text" class="w-full border-gray-300 rounded-lg" placeholder="Dirección del armador">
+                            @error('armador_direccion') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico *</label>
+                            <input wire:model="armador_email" type="email" class="w-full border-gray-300 rounded-lg" placeholder="correo@ejemplo.com">
+                            @error('armador_email') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Contacto *</label>
+                            <input wire:model="armador_contacto" type="text" class="w-full border-gray-300 rounded-lg" placeholder="Nombre del contacto">
+                            @error('armador_contacto') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Teléfono de Contacto *</label>
+                            <input wire:model="armador_telefono" type="text" class="w-full border-gray-300 rounded-lg" placeholder="Teléfono del armador">
+                            @error('armador_telefono') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                        </div>
+
+                        <!-- Información de la Embarcación -->
+                        <div class="md:col-span-2 mt-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">Información de la Embarcación</h3>
+                        </div>
+
                         @if(auth()->user()->role === 'admin' || auth()->user()->role === 'inspector')
                         <div class="md:col-span-2">
                             <label class="block text-sm font-medium text-gray-700 mb-2">Empresa *</label>
@@ -25,7 +59,31 @@
 
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Matrícula *</label>
-                            <input wire:model="matricula" type="text" class="w-full border-gray-300 rounded-lg">
+                            <input wire:model="matricula" type="text" class="w-full border-gray-300 rounded-lg uppercase" placeholder="CP-12-3456 o CP-12-3456-A" pattern="^CP-\d{2}-\d{4}(-[A-Z])?$" maxlength="13" x-data="{}" x-on:input="
+                                let input = $event.target.value.toUpperCase();
+                                let clean = input.replace(/[^0-9A-Z]/g, '');
+                                
+                                if (!clean.startsWith('CP')) {
+                                    clean = 'CP' + clean.replace(/^CP/, '');
+                                }
+                                
+                                let formatted = 'CP';
+                                let rest = clean.substring(2);
+                                
+                                if (rest.length > 0) {
+                                    formatted += '-' + rest.substring(0, 2);
+                                }
+                                if (rest.length > 2) {
+                                    formatted += '-' + rest.substring(2, 6);
+                                }
+                                if (rest.length > 6) {
+                                    formatted += '-' + rest.substring(6, 7);
+                                }
+                                
+                                $event.target.value = formatted;
+                                $wire.set('matricula', formatted);
+                            ">
+                            <p class="text-xs text-gray-500 mt-1">Formato: CP-##-#### o CP-##-####-X</p>
                             @error('matricula') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                         </div>
 
@@ -107,7 +165,7 @@
                         </div>
 
                         <div class="md:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 mb-3">Imágenes de la Embarcación</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-3">Imágenes de la Embarcación (5 Lados)</label>
                             
                             <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
                                 @if($imagenesExistentes && count($imagenesExistentes) > 0)
@@ -135,48 +193,57 @@
                                     </div>
                                 @endif
 
-                                <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-400 transition bg-white" x-data="{ uploading: false }" x-on:livewire-upload-start="uploading = true" x-on:livewire-upload-finish="uploading = false">
-                                    <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                    </svg>
-                                    <label for="file-upload" class="cursor-pointer">
-                                        <span class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition">Seleccionar imágenes</span>
-                                        <input id="file-upload" type="file" wire:model="imagenes" multiple accept="image/*" class="sr-only">
-                                    </label>
-                                    <p class="text-sm text-gray-500 mt-3">o arrastra y suelta aquí</p>
-                                    <p class="text-xs text-gray-400 mt-2">JPG, PNG hasta 5MB cada una</p>
-                                    
-                                    <div x-show="uploading" class="mt-6">
-                                        <div class="w-full bg-gray-200 rounded-full h-2 max-w-xs mx-auto">
-                                            <div class="bg-blue-600 h-2 rounded-full animate-pulse" style="width: 100%"></div>
-                                        </div>
-                                        <p class="text-sm text-gray-600 mt-3 font-medium">Cargando imágenes...</p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <!-- Proa -->
+                                    <div class="border-2 border-gray-300 rounded-lg p-4 bg-white">
+                                        <label class="block text-sm font-semibold text-gray-700 mb-2">Proa (Frente)</label>
+                                        <input type="file" wire:model="imagen_proa" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                        @error('imagen_proa') <span class="text-red-600 text-xs mt-1 block">{{ $message }}</span> @enderror
+                                        @if($imagen_proa)
+                                            <img src="{{ $imagen_proa->temporaryUrl() }}" class="mt-2 w-full h-32 object-cover rounded">
+                                        @endif
+                                    </div>
+
+                                    <!-- Popa -->
+                                    <div class="border-2 border-gray-300 rounded-lg p-4 bg-white">
+                                        <label class="block text-sm font-semibold text-gray-700 mb-2">Popa (Atrás)</label>
+                                        <input type="file" wire:model="imagen_popa" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                        @error('imagen_popa') <span class="text-red-600 text-xs mt-1 block">{{ $message }}</span> @enderror
+                                        @if($imagen_popa)
+                                            <img src="{{ $imagen_popa->temporaryUrl() }}" class="mt-2 w-full h-32 object-cover rounded">
+                                        @endif
+                                    </div>
+
+                                    <!-- Estribor -->
+                                    <div class="border-2 border-gray-300 rounded-lg p-4 bg-white">
+                                        <label class="block text-sm font-semibold text-gray-700 mb-2">Estribor (Derecha)</label>
+                                        <input type="file" wire:model="imagen_estribor" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                        @error('imagen_estribor') <span class="text-red-600 text-xs mt-1 block">{{ $message }}</span> @enderror
+                                        @if($imagen_estribor)
+                                            <img src="{{ $imagen_estribor->temporaryUrl() }}" class="mt-2 w-full h-32 object-cover rounded">
+                                        @endif
+                                    </div>
+
+                                    <!-- Babor -->
+                                    <div class="border-2 border-gray-300 rounded-lg p-4 bg-white">
+                                        <label class="block text-sm font-semibold text-gray-700 mb-2">Babor (Izquierda)</label>
+                                        <input type="file" wire:model="imagen_babor" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                        @error('imagen_babor') <span class="text-red-600 text-xs mt-1 block">{{ $message }}</span> @enderror
+                                        @if($imagen_babor)
+                                            <img src="{{ $imagen_babor->temporaryUrl() }}" class="mt-2 w-full h-32 object-cover rounded">
+                                        @endif
+                                    </div>
+
+                                    <!-- Cubierta -->
+                                    <div class="border-2 border-gray-300 rounded-lg p-4 bg-white md:col-span-2">
+                                        <label class="block text-sm font-semibold text-gray-700 mb-2">Cubierta (Superior)</label>
+                                        <input type="file" wire:model="imagen_cubierta" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                        @error('imagen_cubierta') <span class="text-red-600 text-xs mt-1 block">{{ $message }}</span> @enderror
+                                        @if($imagen_cubierta)
+                                            <img src="{{ $imagen_cubierta->temporaryUrl() }}" class="mt-2 w-full h-32 object-cover rounded">
+                                        @endif
                                     </div>
                                 </div>
-                                @error('imagenes.*') <span class="text-red-600 text-sm mt-2 block">{{ $message }}</span> @enderror
-
-                                @if($imagenes)
-                                    <div class="mt-6">
-                                        <div class="flex items-center justify-between mb-3">
-                                            <h4 class="text-sm font-medium text-green-700 flex items-center">
-                                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                </svg>
-                                                Listas para subir ({{ count($imagenes) }} {{ count($imagenes) == 1 ? 'imagen' : 'imágenes' }})
-                                            </h4>
-                                        </div>
-                                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                                            @foreach($imagenes as $index => $imagen)
-                                                <div class="relative aspect-video bg-white rounded-lg overflow-hidden border-2 border-green-400 shadow-sm">
-                                                    <img src="{{ $imagen->temporaryUrl() }}" class="w-full h-full object-cover">
-                                                    <div class="absolute top-2 right-2 bg-green-600 text-white text-xs px-2 py-1 rounded font-medium shadow-lg">
-                                                        Nueva
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                @endif
                             </div>
                         </div>
                     </div>

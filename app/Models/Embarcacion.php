@@ -30,6 +30,10 @@ class Embarcacion extends Model
         'codigo_qr',
         'estado',
         'observaciones',
+        'armador_direccion',
+        'armador_email',
+        'armador_contacto',
+        'armador_telefono',
         'ultima_verificacion',
     ];
 
@@ -155,6 +159,14 @@ class Embarcacion extends Model
     }
 
     /**
+     * Check if embarcacion is apta para navegar based on documents.
+     */
+    public function esAptaParaNavegar(): bool
+    {
+        return $this->puedeNavegar();
+    }
+
+    /**
      * Check if embarcacion can navigate based on documents.
      */
     public function puedeNavegar(): bool
@@ -202,5 +214,13 @@ class Embarcacion extends Model
         }
 
         return $faltantes;
+    }
+
+    /**
+     * Get reasons why embarcacion is not apta para navegar.
+     */
+    public function getRazonesNoApta(): array
+    {
+        return $this->getDocumentosFaltantes();
     }
 }
