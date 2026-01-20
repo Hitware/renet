@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120">
+    <!-- Cóndor - cabeza -->
+    <ellipse cx="50" cy="12" rx="12" ry="8" fill="#4A4A4A"/>
+    <circle cx="50" cy="12" r="4" fill="#FFFFFF"/>
+    <circle cx="50" cy="12" r="2" fill="#000000"/>
+
+    <!-- Cóndor - alas -->
+    <path d="M20 15 Q10 25 15 35 L30 25 Z" fill="#333333"/>
+    <path d="M80 15 Q90 25 85 35 L70 25 Z" fill="#333333"/>
+
+    <!-- Escudo - borde -->
+    <path d="M15 30 L15 85 Q15 110 50 115 Q85 110 85 85 L85 30 Z" fill="#8B7355" stroke="#6B5344" stroke-width="2"/>
+
+    <!-- Escudo - interior -->
+    <path d="M20 33 L20 82 Q20 105 50 110 Q80 105 80 82 L80 33 Z" fill="#003893"/>
+
+    <!-- Franja amarilla -->
+    <path d="M20 33 L80 33 L80 55 L20 55 Z" fill="#FCD116"/>
+
+    <!-- Franja azul (ya está como fondo) -->
+
+    <!-- Franja roja -->
+    <path d="M20 75 L80 75 L80 82 Q80 105 50 110 Q20 105 20 82 Z" fill="#CE1126"/>
+
+    <!-- Granada en la franja amarilla -->
+    <circle cx="50" cy="44" r="8" fill="#CE1126"/>
+    <path d="M46 36 L50 30 L54 36" fill="#228B22" stroke="#228B22" stroke-width="1"/>
+
+    <!-- Gorro frigio en la franja azul -->
+    <path d="M42 60 L50 52 L58 60 L58 68 L42 68 Z" fill="#CE1126"/>
+
+    <!-- Cornucopias en la franja roja (simplificadas) -->
+    <ellipse cx="35" cy="90" rx="6" ry="4" fill="#FFD700"/>
+    <ellipse cx="65" cy="90" rx="6" ry="4" fill="#FFD700"/>
+
+    <!-- Barco en la base -->
+    <path d="M40 98 L60 98 L58 102 L42 102 Z" fill="#8B4513"/>
+    <line x1="50" y1="98" x2="50" y2="92" stroke="#8B4513" stroke-width="1"/>
+
+    <!-- Cintas -->
+    <path d="M10 110 Q30 105 50 115 Q70 105 90 110" fill="none" stroke="#CE1126" stroke-width="3"/>
+</svg>

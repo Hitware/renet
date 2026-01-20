@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 214">
+    <!-- Cielo gris-azulado -->
+    <rect x="0" y="0" width="340" height="50" fill="#B8C8D8"/>
+    <rect x="0" y="50" width="340" height="40" fill="#C8D8E8"/>
+    <rect x="0" y="90" width="340" height="40" fill="#A8B8C8"/>
+
+    <!-- Mar -->
+    <rect x="0" y="130" width="340" height="40" fill="#6BA3BE"/>
+    <rect x="0" y="170" width="340" height="44" fill="#4A8AA8"/>
+
+    <!-- Lancha/Yate -->
+    <g transform="translate(200, 60)">
+        <!-- Sombra en el agua -->
+        <ellipse cx="30" cy="95" rx="50" ry="8" fill="#3A7A98"/>
+
+        <!-- Casco inferior -->
+        <path d="M-30 70 Q-35 80 -20 85 L80 85 Q95 80 90 70 L85 60 L-25 60 Z" fill="#FFFFFF" stroke="#DDDDDD" stroke-width="1"/>
+
+        <!-- Casco superior -->
+        <path d="M-25 60 L85 60 L80 50 L-20 50 Z" fill="#F5F5F5" stroke="#DDDDDD" stroke-width="0.5"/>
+
+        <!-- Línea azul decorativa -->
+        <path d="M-28 75 L88 75" stroke="#2196F3" stroke-width="2"/>
+
+        <!-- Cabina -->
+        <path d="M5 50 L5 25 L60 25 L70 35 L70 50 Z" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="0.5"/>
+
+        <!-- Ventanas -->
+        <rect x="10" y="30" width="15" height="12" fill="#87CEEB" stroke="#999999" stroke-width="0.5"/>
+        <rect x="28" y="30" width="15" height="12" fill="#87CEEB" stroke="#999999" stroke-width="0.5"/>
+        <rect x="46" y="32" width="12" height="10" fill="#87CEEB" stroke="#999999" stroke-width="0.5"/>
+
+        <!-- Techo -->
+        <path d="M0 25 L0 18 Q30 10 65 18 L65 25 Z" fill="#E8E8E8" stroke="#CCCCCC" stroke-width="0.5"/>
+
+        <!-- Soportes del techo -->
+        <line x1="5" y1="25" x2="5" y2="18" stroke="#AAAAAA" stroke-width="1.5"/>
+        <line x1="60" y1="25" x2="60" y2="18" stroke="#AAAAAA" stroke-width="1.5"/>
+
+        <!-- Antena -->
+        <line x1="50" y1="18" x2="50" y2="5" stroke="#666666" stroke-width="1"/>
+
+        <!-- Motor -->
+        <rect x="78" y="60" width="8" height="20" fill="#333333"/>
+
+        <!-- Detalles circulares -->
+        <ellipse cx="25" cy="42" rx="4" ry="4" fill="#555555"/>
+        <ellipse cx="45" cy="42" rx="4" ry="4" fill="#444444"/>
+    </g>
+
+    <!-- Olas -->
+    <path d="M0 140 Q20 137 40 140 Q60 143 80 140 Q100 137 120 140 Q140 143 160 140 Q180 137 200 140 Q220 143 240 140 Q260 137 280 140 Q300 143 320 140 L340 140 L340 150 L0 150 Z" fill="#5A9AB8"/>
+
+    <!-- Estela del barco -->
+    <path d="M280 150 Q300 160 340 155 L340 165 Q300 170 280 160 Z" fill="#FFFFFF" opacity="0.4"/>
+</svg>

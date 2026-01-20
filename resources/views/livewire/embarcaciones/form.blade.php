@@ -61,27 +61,28 @@
                             <label class="block text-sm font-medium text-gray-700 mb-2">Matrícula *</label>
                             <input wire:model="matricula" type="text" class="w-full border-gray-300 rounded-lg uppercase" placeholder="CP-12-3456 o CP-12-3456-A" pattern="^CP-\d{2}-\d{4}(-[A-Z])?$" maxlength="13" x-data="{}" x-on:input="
                                 let input = $event.target.value.toUpperCase();
-                                let clean = input.replace(/[^0-9A-Z]/g, '');
+                                let clean = input.replace(/[^CP0-9A-Z-]/g, '');
                                 
-                                if (!clean.startsWith('CP')) {
-                                    clean = 'CP' + clean.replace(/^CP/, '');
+                                if (clean.startsWith('CP')) {
+                                    let parts = clean.substring(2).replace(/-/g, '');
+                                    let formatted = 'CP';
+                                    
+                                    if (parts.length > 0) {
+                                        formatted += '-' + parts.substring(0, 2);
+                                    }
+                                    if (parts.length > 2) {
+                                        formatted += '-' + parts.substring(2, 6);
+                                    }
+                                    if (parts.length > 6) {
+                                        formatted += '-' + parts.substring(6, 7);
+                                    }
+                                    
+                                    $event.target.value = formatted;
+                                    $wire.set('matricula', formatted);
+                                } else {
+                                    $event.target.value = clean;
+                                    $wire.set('matricula', clean);
                                 }
-                                
-                                let formatted = 'CP';
-                                let rest = clean.substring(2);
-                                
-                                if (rest.length > 0) {
-                                    formatted += '-' + rest.substring(0, 2);
-                                }
-                                if (rest.length > 2) {
-                                    formatted += '-' + rest.substring(2, 6);
-                                }
-                                if (rest.length > 6) {
-                                    formatted += '-' + rest.substring(6, 7);
-                                }
-                                
-                                $event.target.value = formatted;
-                                $wire.set('matricula', formatted);
                             ">
                             <p class="text-xs text-gray-500 mt-1">Formato: CP-##-#### o CP-##-####-X</p>
                             @error('matricula') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
@@ -94,7 +95,7 @@
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Tipo *</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Catalogación *</label>
                             <select wire:model="tipo" class="w-full border-gray-300 rounded-lg">
                                 <option value="motonave_pasaje">Motonave de Pasaje</option>
                                 <option value="carga">Carga</option>

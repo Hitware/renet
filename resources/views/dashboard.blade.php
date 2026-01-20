@@ -267,6 +267,56 @@
                                 <p class="text-sm text-gray-500">Ver todas</p>
                             </div>
                         </a>
+
+                        <a href="{{ route('pilotos.index') }}" class="flex items-center p-5 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl hover:from-purple-50 hover:to-purple-100 transition-all duration-200 border border-gray-200 hover:border-purple-300 group">
+                            <div class="flex-shrink-0 bg-white p-3 rounded-lg shadow-sm group-hover:shadow-md transition-shadow">
+                                <svg class="h-7 w-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
+                                </svg>
+                            </div>
+                            <div class="ml-4">
+                                <p class="font-semibold text-gray-900">Mi Perfil de Piloto</p>
+                                <p class="text-sm text-gray-500">{{ Auth::user()->piloto ? 'Ver/Editar perfil' : 'Crear perfil' }}</p>
+                            </div>
+                        </a>
+
+                        <a href="{{ route('pilotos.buscar') }}" class="flex items-center p-5 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl hover:from-indigo-50 hover:to-indigo-100 transition-all duration-200 border border-gray-200 hover:border-indigo-300 group">
+                            <div class="flex-shrink-0 bg-white p-3 rounded-lg shadow-sm group-hover:shadow-md transition-shadow">
+                                <svg class="h-7 w-7 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                </svg>
+                            </div>
+                            <div class="ml-4">
+                                <p class="font-semibold text-gray-900">Buscar Pilotos</p>
+                                <p class="text-sm text-gray-500">Encontrar tripulación</p>
+                            </div>
+                        </a>
+                    @endif
+
+                    @if(Auth::user()->isPublico())
+                        <a href="{{ route('pilotos.index') }}" class="flex items-center p-5 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl hover:from-purple-50 hover:to-purple-100 transition-all duration-200 border border-gray-200 hover:border-purple-300 group">
+                            <div class="flex-shrink-0 bg-white p-3 rounded-lg shadow-sm group-hover:shadow-md transition-shadow">
+                                <svg class="h-7 w-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
+                                </svg>
+                            </div>
+                            <div class="ml-4">
+                                <p class="font-semibold text-gray-900">Mi Perfil de Piloto</p>
+                                <p class="text-sm text-gray-500">{{ Auth::user()->piloto ? 'Ver/Editar perfil' : 'Crear perfil' }}</p>
+                            </div>
+                        </a>
+
+                        <a href="{{ route('verificar.piloto') }}" class="flex items-center p-5 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl hover:from-indigo-50 hover:to-indigo-100 transition-all duration-200 border border-gray-200 hover:border-indigo-300 group">
+                            <div class="flex-shrink-0 bg-white p-3 rounded-lg shadow-sm group-hover:shadow-md transition-shadow">
+                                <svg class="h-7 w-7 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                                </svg>
+                            </div>
+                            <div class="ml-4">
+                                <p class="font-semibold text-gray-900">Verificar Piloto</p>
+                                <p class="text-sm text-gray-500">Escanear credencial</p>
+                            </div>
+                        </a>
                     @endif
 
                     <a href="{{ route('verificar') }}" class="flex items-center p-5 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl hover:from-purple-50 hover:to-purple-100 transition-all duration-200 border border-gray-200 hover:border-purple-300 group">

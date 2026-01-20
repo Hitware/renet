@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 214">
+    <!-- Cielo con colores de atardecer -->
+    <rect x="0" y="0" width="340" height="70" fill="#87CEEB"/>
+    <rect x="0" y="70" width="340" height="25" fill="#FFB6C1"/>
+    <rect x="0" y="95" width="340" height="20" fill="#FFA07A"/>
+    <rect x="0" y="115" width="340" height="15" fill="#FF8C69"/>
+
+    <!-- Sol -->
+    <circle cx="280" cy="100" r="25" fill="#FFD700"/>
+    <circle cx="280" cy="100" r="20" fill="#FFEC8B"/>
+
+    <!-- Montañas/tierra -->
+    <path d="M0 110 L20 105 L25 95 L30 100 L35 90 L45 95 L50 88 L60 92 L70 110 L0 110 Z" fill="#C4A88A"/>
+
+    <!-- Mar turquesa -->
+    <rect x="0" y="130" width="340" height="40" fill="#5BC0DE"/>
+    <rect x="0" y="170" width="340" height="24" fill="#3498DB"/>
+    <rect x="0" y="194" width="340" height="20" fill="#2980B9"/>
+
+    <!-- Reflejo del sol en el agua -->
+    <ellipse cx="280" cy="160" rx="40" ry="8" fill="#FFD700" opacity="0.3"/>
+
+    <!-- Velero -->
+    <g transform="translate(150, 95)">
+        <!-- Casco del barco -->
+        <path d="M-20 45 Q0 55 40 45 L35 40 L-15 40 Z" fill="#FFFFFF" stroke="#DDDDDD" stroke-width="0.5"/>
+        <!-- Mástil -->
+        <line x1="10" y1="45" x2="10" y2="-15" stroke="#8B4513" stroke-width="2"/>
+        <!-- Vela principal -->
+        <path d="M12 -12 L12 40 L50 40 Z" fill="#FFFFFF" stroke="#EEEEEE" stroke-width="0.5"/>
+        <!-- Vela secundaria -->
+        <path d="M8 -10 L8 35 L-25 35 Z" fill="#FFF8F0" stroke="#EEEEEE" stroke-width="0.5"/>
+        <!-- Bandera -->
+        <path d="M10 -15 L10 -20 L18 -17 L10 -15" fill="#FF6347"/>
+    </g>
+
+    <!-- Olas -->
+    <path d="M0 145 Q20 142 40 145 Q60 148 80 145 Q100 142 120 145 Q140 148 160 145 Q180 142 200 145 Q220 148 240 145 Q260 142 280 145 Q300 148 320 145 Q340 142 340 145 L340 155 L0 155 Z" fill="#4AA8C7"/>
+</svg>

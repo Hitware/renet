@@ -35,6 +35,7 @@ class User extends Authenticatable
         'password',
         'role',
         'empresa_id',
+        'piloto_id',
     ];
 
     /**
@@ -77,6 +78,14 @@ class User extends Authenticatable
     public function empresa(): BelongsTo
     {
         return $this->belongsTo(Empresa::class);
+    }
+
+    /**
+     * Get the piloto profile for the user.
+     */
+    public function piloto(): BelongsTo
+    {
+        return $this->belongsTo(Piloto::class);
     }
 
     /**

@@ -17,17 +17,23 @@ class Embarcacion extends Model
         'empresa_id',
         'matricula',
         'nombre',
+        'distintivo_llamada',
+        'mmsi',
         'tipo',
         'capacidad_pasajeros',
         'eslora',
         'manga',
+        'puntal',
+        'calado',
         'tonelaje',
         'ano_construccion',
         'material_casco',
         'motor_marca',
         'motor_modelo',
         'motor_potencia',
+        'numero_motores',
         'codigo_qr',
+        'numero_omi',
         'estado',
         'observaciones',
         'armador_direccion',
@@ -41,6 +47,8 @@ class Embarcacion extends Model
         'capacidad_pasajeros' => 'integer',
         'eslora' => 'decimal:2',
         'manga' => 'decimal:2',
+        'puntal' => 'decimal:2',
+        'calado' => 'decimal:2',
         'tonelaje' => 'decimal:2',
         'motor_potencia' => 'integer',
         'ultima_verificacion' => 'datetime',
@@ -171,19 +179,24 @@ class Embarcacion extends Model
      */
     public function puedeNavegar(): bool
     {
-        $tiposRequeridos = [
-            'matricula',
-            'certificado_navegacion',
-            'poliza_accidentes',
-            'poliza_pandi',
-            'resolucion_dimar'
-        ];
+        $tiposRequeridos = ['matricula', 'certificado_navegacion', 'resolucion_dimar'];
 
         foreach ($tiposRequeridos as $tipo) {
             $documento = $this->documentos()->where('tipo_documento', $tipo)->first();
             if (!$documento || !$documento->estaVigente()) {
                 return false;
             }
+        }
+
+        // Verificar pólizas: debe tener PANDI O Accidentes (PANDI incluye accidentes)
+        $polizaPandi = $this->documentos()->where('tipo_documento', 'poliza_pandi')->first();
+        $polizaAccidentes = $this->documentos()->where('tipo_documento', 'poliza_accidentes')->first();
+        
+        $tienePandiVigente = $polizaPandi && $polizaPandi->estaVigente();
+        $tieneAccidentesVigente = $polizaAccidentes && $polizaAccidentes->estaVigente();
+        
+        if (!$tienePandiVigente && !$tieneAccidentesVigente) {
+            return false;
         }
 
         return true;
@@ -197,8 +210,6 @@ class Embarcacion extends Model
         $tiposRequeridos = [
             'matricula' => 'Matrícula',
             'certificado_navegacion' => 'Certificado de Navegación',
-            'poliza_accidentes' => 'Póliza de Accidentes Personales',
-            'poliza_pandi' => 'Póliza Todo Riesgo PANDI',
             'resolucion_dimar' => 'Resolución DIMAR'
         ];
 
@@ -210,6 +221,21 @@ class Embarcacion extends Model
                 $faltantes[] = "$nombre no registrada";
             } elseif (!$documento->estaVigente()) {
                 $faltantes[] = "$nombre vencida";
+            }
+        }
+
+        // Verificar pólizas: debe tener PANDI O Accidentes
+        $polizaPandi = $this->documentos()->where('tipo_documento', 'poliza_pandi')->first();
+        $polizaAccidentes = $this->documentos()->where('tipo_documento', 'poliza_accidentes')->first();
+        
+        $tienePandिVigente = $polizaPandi && $polizaPandi->estaVigente();
+        $tieneAccidentesVigente = $polizaAccidentes && $polizaAccidentes->estaVigente();
+        
+        if (!$tienePandिVigente && !$tieneAccidentesVigente) {
+            if (!$polizaPandi && !$polizaAccidentes) {
+                $faltantes[] = 'Póliza PANDI o Póliza de Accidentes Personales no registrada';
+            } else {
+                $faltantes[] = 'Póliza PANDI o Póliza de Accidentes Personales vencida';
             }
         }
 

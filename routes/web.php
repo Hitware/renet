@@ -25,9 +25,20 @@ Route::middleware([
         Route::get('/{embarcacion}/historial', App\Livewire\Documentos\History::class)->name('historial');
         Route::get('/{embarcacion}/carnet', [App\Http\Controllers\VerificacionController::class, 'descargarCarnet'])->name('carnet');
     });
+
+    Route::prefix('pilotos')->name('pilotos.')->group(function () {
+        Route::get('/', App\Livewire\Pilotos\Index::class)->name('index');
+        Route::get('/buscar', App\Livewire\Pilotos\Busqueda::class)->name('buscar');
+        Route::get('/crear', App\Livewire\Pilotos\Form::class)->name('crear');
+        Route::get('/{piloto}', App\Livewire\Pilotos\Show::class)->name('show');
+        Route::get('/{piloto}/editar', App\Livewire\Pilotos\Form::class)->name('editar');
+        Route::get('/{piloto}/credencial', [App\Http\Controllers\VerificacionController::class, 'descargarCredencialPiloto'])->name('credencial');
+        Route::get('/{piloto}/hoja-vida', [App\Http\Controllers\VerificacionController::class, 'descargarHojaVida'])->name('hoja-vida');
+    });
 });
 
 Route::get('/verificar/{codigo?}', [App\Http\Controllers\VerificacionController::class, 'verificar'])->name('verificar');
+Route::get('/verificar-piloto/{codigo?}', [App\Http\Controllers\VerificacionController::class, 'verificarPiloto'])->name('verificar.piloto');
 Route::get('/qr/{codigo}', [App\Http\Controllers\VerificacionController::class, 'generarQR'])->name('qr.generar');
 Route::post('/reportes', [App\Http\Controllers\ReporteController::class, 'store'])->name('reportes.store');
 

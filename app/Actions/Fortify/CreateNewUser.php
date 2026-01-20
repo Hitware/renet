@@ -3,8 +3,10 @@
 namespace App\Actions\Fortify;
 
 use App\Models\User;
+use App\Models\Empresa;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
 
@@ -30,14 +32,28 @@ class CreateNewUser implements CreatesNewUsers
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
-        return User::create([
-            'name' => $input['name'],
-            'tipo_documento' => $input['tipo_documento'],
-            'documento' => $input['documento'],
-            'telefono' => $input['telefono'],
-            'email' => $input['email'],
-            'password' => Hash::make($input['password']),
-            'role' => 'empresa', // Siempre empresa en registro público
-        ]);
+        return DB::transaction(function () use ($input) {
+            $empresa = Empresa::create([
+                'nit' => $input['documento'],
+                'razon_social' => $input['name'],
+                'direccion' => 'Por definir',
+                'telefono' => $input['telefono'],
+                'email' => $input['email'],
+                'representante_legal' => $input['name'],
+                'documento_representante' => $input['documento'],
+                'estado' => 'activa',
+            ]);
+
+            return User::create([
+                'name' => $input['name'],
+                'tipo_documento' => $input['tipo_documento'],
+                'documento' => $input['documento'],
+                'telefono' => $input['telefono'],
+                'email' => $input['email'],
+                'password' => Hash::make($input['password']),
+                'role' => 'empresa',
+                'empresa_id' => $empresa->id,
+            ]);
+        });
     }
 }

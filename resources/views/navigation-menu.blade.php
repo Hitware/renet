@@ -18,7 +18,19 @@
 
                     @if(Auth::user()->isAdmin() || Auth::user()->isInspector() || Auth::user()->isEmpresa())
                         <x-nav-link href="{{ route('embarcaciones.index') }}" :active="request()->routeIs('embarcaciones.*')">
-                            Embarcaciones 2
+                            Embarcaciones
+                        </x-nav-link>
+                    @endif
+
+                    @if(Auth::user()->isEmpresa() || Auth::user()->isPublico())
+                        <x-nav-link href="{{ route('pilotos.index') }}" :active="request()->routeIs('pilotos.index') || request()->routeIs('pilotos.show') || request()->routeIs('pilotos.crear') || request()->routeIs('pilotos.editar')">
+                            Mi Perfil de Piloto
+                        </x-nav-link>
+                    @endif
+
+                    @if(Auth::user()->isEmpresa() || Auth::user()->isInspector() || Auth::user()->isAdmin())
+                        <x-nav-link href="{{ route('pilotos.buscar') }}" :active="request()->routeIs('pilotos.buscar')">
+                            Buscar Pilotos
                         </x-nav-link>
                     @endif
                 </div>
@@ -152,6 +164,18 @@
             @if(Auth::user()->isAdmin() || Auth::user()->isInspector() || Auth::user()->isEmpresa())
                 <x-responsive-nav-link href="{{ route('embarcaciones.index') }}" :active="request()->routeIs('embarcaciones.*')">
                     Embarcaciones
+                </x-responsive-nav-link>
+            @endif
+
+            @if(Auth::user()->isEmpresa() || Auth::user()->isPublico())
+                <x-responsive-nav-link href="{{ route('pilotos.index') }}" :active="request()->routeIs('pilotos.index') || request()->routeIs('pilotos.show') || request()->routeIs('pilotos.crear') || request()->routeIs('pilotos.editar')">
+                    Mi Perfil de Piloto
+                </x-responsive-nav-link>
+            @endif
+
+            @if(Auth::user()->isEmpresa() || Auth::user()->isInspector() || Auth::user()->isAdmin())
+                <x-responsive-nav-link href="{{ route('pilotos.buscar') }}" :active="request()->routeIs('pilotos.buscar')">
+                    Buscar Pilotos
                 </x-responsive-nav-link>
             @endif
         </div>

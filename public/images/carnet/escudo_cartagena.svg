@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 60">
+    <!-- Forma del escudo -->
+    <path d="M25 2 L48 12 L48 45 Q48 55 25 58 Q2 55 2 45 L2 12 Z" fill="#006400" stroke="#FFD700" stroke-width="2"/>
+
+    <!-- Cruz blanca vertical -->
+    <rect x="21" y="8" width="8" height="45" fill="#FFFFFF"/>
+
+    <!-- Cruz blanca horizontal -->
+    <rect x="8" y="23" width="34" height="8" fill="#FFFFFF"/>
+</svg>
